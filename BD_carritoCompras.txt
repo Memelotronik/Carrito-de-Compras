@@ -1,0 +1,20 @@
+create database carritoCompras;
+
+use carritoCompras;
+
+create table Producto (id_producto int NOT NULL AUTO_INCREMENT, desc_producto varchar(30) NOT NULL, 
+precio decimal(10,2) NOT NULL, img_producto varchar(30) NOT NULL, PRIMARY KEY(id_producto));
+
+create table cat_usuario (tipo_usuario varchar(10) NOT NULL, desc_usuario varchar(20) NOT NULL);
+
+create table Usuario (id_usuario int NOT NULL AUTO_INCREMENT, nombre varchar(30) NOT NULL, 
+tipo_usuario varchar(10) NOT NULL, contrasena varchar(30) NOT NULL, correo varchar(30) NOT NULL, 
+PRIMARY KEY(id_usuario), FOREIGN KEY(tipo_usuario) REFERENCES cat_usuario(tipo_usuario));
+
+create table Orden (id_orden int NOT NULL AUTO_INCREMENT, id_usuario int NOT NULL, 
+fecha_hora DATETIME NOT NULL DEFAULT('0000-00-00 00:00:00'), monto_total decimal(10,2) NOT NULL, 
+FOREIGN KEY(id_usuario) REFERENCES Usuario(id_usuario));
+
+create table orden_producto (id_orden int NOT NULL, id_producto int NOT NULL, cantidad int NOT NULL, 
+subtotal decimal(10,2) NOT NULL,FOREIGN KEY(id_orden) REFERENCES Orden(id_orden), 
+FOREIGN KEY(id_producto) REFERENCES Producto(id_producto));
